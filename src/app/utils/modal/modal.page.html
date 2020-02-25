@@ -2,6 +2,17 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md>
+        
+        <div *ngFor="let foto of notamodal.imagenes" class="modalImageCont">
+          <img class="imageModal" src="{{'data:image/png;base64,'+ foto}}">
+          <div class="buttoncont">
+            <ion-button (click)="deletePic(foto)" class="deleteButton" color="dark" fill="solid">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </div>
+          
+        </div>
+
         <form (ngSubmit)="closeModal()" [formGroup]="notaForm">
           <ion-item>
             <ion-label position="floating">Título</ion-label>
@@ -9,7 +20,8 @@
           </ion-item>
           <ion-item lines="none">
             <ion-label position="floating">Descripción</ion-label>
-            <ion-textarea rows="30" cols="20" formControlName="description" [(ngModel)]="notamodal.descripcion">
+            <ion-textarea rows="30" cols="20" autoGrow="true" formControlName="description"
+              [(ngModel)]="notamodal.descripcion">
             </ion-textarea>
           </ion-item>
         </form>
@@ -23,7 +35,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
 </ion-content>
 <ion-footer>
   <ion-toolbar>
@@ -34,14 +46,14 @@
       <ion-button>
         <ion-icon slot="icon-only" name="person-add"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button (click)="addImageToNota($event)">
         <ion-icon slot="icon-only" name="image"></ion-icon>
       </ion-button>
       <ion-button (click)="encodeText()">
         <ion-icon slot="icon-only" name="barcode"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon slot="icon-only" name="more"></ion-icon>
+      <ion-button (click)="openPopover($event)">
+        <ion-icon slot="icon-only" name="more" ></ion-icon>
       </ion-button>
 
     </ion-buttons>

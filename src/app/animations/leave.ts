@@ -1,6 +1,6 @@
 import { Animation } from '@ionic/core';
 
-export function myLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+export function slideOutAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
 
     const baseAnimation = new AnimationC();
 

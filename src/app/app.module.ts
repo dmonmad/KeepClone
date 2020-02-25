@@ -19,30 +19,32 @@ import { environment } from 'src/environments/environment.prod';
 import { NotasService } from './servicio/notas.service';
 import { UiService } from './servicio/ui.service';
 import { ModalPage } from './utils/modal/modal.page';
+import { PopoverPage } from './utils/popover/popover.page';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { LongPressModule } from 'ionic-long-press';
+
+
+// import { HideHeaderModule } from './directives/hide-header.module';
 
 
 @NgModule({
-  declarations: [AppComponent, ModalPage],
-  entryComponents: [ModalPage],
+  declarations: [AppComponent],
+  entryComponents: [ModalPage, PopoverPage],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     FormsModule,
-    IonicModule.forRoot(), 
+    IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxQRCodeModule,
-    LongPressModule
+    NgxQRCodeModule
   ],
-  
-  
+
+
   providers: [
     StatusBar,
     SplashScreen,
@@ -53,9 +55,9 @@ import { LongPressModule } from 'ionic-long-press';
     NativeStorage,
     GooglePlus,
     BarcodeScanner
-    
+
   ],
 
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

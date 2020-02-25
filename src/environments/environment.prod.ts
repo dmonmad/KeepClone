@@ -11,5 +11,5 @@ export const environment = {
     appId: "1:712062287369:web:ee0339647931ace445c2d8",
     measurementId: "G-MQK34DV5EH"
   },
-  bbdd: "todo"
+  bbdd: "notasv2"
 };

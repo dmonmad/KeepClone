@@ -1,60 +1,119 @@
-
-<ion-header>
+<ion-header *ngIf="!isSearchBarOpened">
   <ion-toolbar color="tab1">
-    <ion-grid>
-      <ion-row>
+    <ion-buttons slot="start">
+      <img width="40px" src="assets/img/Logo.png">
+      <ion-title>
+        Notas
+      </ion-title>
+    </ion-buttons>
 
-        <ion-col size="3" class="ion-text-left">
-          <img height="40px" src="assets/img/Logo.png" style="margin:auto">
-            <ion-title style="height:100%; margin:auto">
-              Notas              
-            </ion-title>
 
-        </ion-col >
-
-        <ion-col size="6">
-
-          <ion-searchbar animated color="light" (ionInput)="buscarNota($event)"></ion-searchbar>
-
-        </ion-col>
-
-        <ion-col text-right style="margin: auto" size="3">
-
-          <ion-chip outline color="dark" (click)="onLogout()">
-            <ion-avatar>
-              <img [src]="userImage">
-            </ion-avatar>
-            <ion-label>Logout</ion-label>
-          </ion-chip>
-
-        </ion-col>
-
-      </ion-row>
-    </ion-grid>
+    <ion-buttons slot="end">
+      <ion-button (click)="alternarSearchbar()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+      <ion-button (click)="alternarModo()">
+        <ion-icon *ngIf="!modoLista" name="list"></ion-icon>
+        <ion-icon *ngIf="modoLista" name="grid"></ion-icon>
+      </ion-button>
+      <ion-avatar style="height: 34px; width: 34px;" (click)="onLogout()">
+        <img [src]="userImage">
+      </ion-avatar>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
+<ion-header *ngIf="isSearchBarOpened">
+  <ion-toolbar color="tab1">
+
+    <ion-searchbar style="height: 35px !important" animated color="light" (ionInput)="buscarNota($event)"
+      showCancelButton="always" (ionCancel)="alternarSearchbar()"></ion-searchbar>
+
+
+    <ion-buttons slot="end">
+      <ion-button (click)="alternarModo()">
+        <ion-icon *ngIf="!modoLista" name="list"></ion-icon>
+        <ion-icon *ngIf="modoLista" name="grid"></ion-icon>
+      </ion-button>
+      <ion-avatar style="height: 34px; width: 34px;" (click)="onLogout()">
+        <img [src]="userImage">
+      </ion-avatar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
 <ion-content class="ion-padding">
+
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Arrastra para refrescar"
       refreshingSpinner="circles" refreshingText="Actualizando...">
     </ion-refresher-content>
   </ion-refresher>
+
+
   <ion-grid class="resize">
     <ion-row>
       <ion-col>
-        <div class="masonry" *ngIf="datosfiltrados.length > 0;else nocontent">
-          <div class="item unselectable" *ngFor="let item of datosfiltrados">
-            <ion-card (longPressed)="multipleSelectionMode()" (click)="editarNota(item.id, item.titulo, item.descripcion)">
-              <ion-card-header>
-                <ion-card-title>{{item.titulo}}</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                {{item.descripcion}}
-              </ion-card-content>
-            </ion-card>
+        <div *ngIf="!modoLista; else listmode">
+          <div class="masonry" *ngIf="datosfiltrados.length > 0;else nocontent">
+            <div class="item unselectable" *ngFor="let item of datosfiltrados">
+              <ion-card (longPressed)="multipleSelectionMode()" (click)="editarNota(item)">
+
+                <img *ngFor="let foto of item.imagenes" src="{{'data:image/png;base64,'+ foto}}">
+                <ion-card-header>
+                  <ion-card-title>{{item.titulo}}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content style="white-space: pre-wrap;">
+                  <div class="cardtext">
+                    {{item.descripcion}}
+                  </div>
+
+                  <div class="cardbuttons">
+                    <ion-row style="text-align: center; vertical-align: middle;" nowrap>
+                      <ion-col>
+
+                        <ion-icon class="cardbutton" src="assets/icon/alarm-outline.svg">
+                        </ion-icon>
+
+                      </ion-col>
+                      <ion-col>
+
+                        <ion-icon class="cardbutton" src="assets/icon/person-add-outline.svg">
+                        </ion-icon>
+
+                      </ion-col>
+                      <ion-col>
+
+                        <ion-icon class="cardbutton" src="assets/icon/color-palette-outline.svg">
+                        </ion-icon>
+
+                      </ion-col>
+                      <ion-col>
+
+                        <ion-icon class="cardbutton" (click)="addImageToNota(item, $event)"
+                          src="assets/icon/image-outline.svg"></ion-icon>
+
+                      </ion-col>
+                      <ion-col>
+
+                        <ion-icon class="cardbutton" (click)="openPopover(item, $event)"
+                          src="assets/icon/ellipsis-vertical.svg"></ion-icon>
+
+                      </ion-col>
+                    </ion-row>
+
+                  </div>
+
+
+                </ion-card-content>
+              </ion-card>
+            </div>
           </div>
+
         </div>
+
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -62,33 +121,64 @@
 
 
 
-  <!-- <ion-item *ngFor="let item of datosfiltrados">
-      <ion-label>
-        <ion-slides [options]="slideOpts">
-          <ion-item-sliding>
-            <ion-item lines="none">
-              <ion-label>
-                <h2>{{item.titulo}}</h2>
-                <p>{{item.descripcion}}</p>
-              </ion-label>
-            </ion-item>
+  <ng-template #listmode>
+    <ion-list lines="none">
+      <ion-item class="unselectable" *ngFor="let item of datosfiltrados">
+        <ion-card (longPressed)="multipleSelectionMode()" (click)="editarNota(item)">
 
-            <ion-item-options lines="none" side="start" (ionSwipe)="editarNota(item.id, item.titulo, item.descripcion)">
-              <ion-item-option>
-                <ion-icon slot="icon-only" name="create"></ion-icon>
-              </ion-item-option>
-            </ion-item-options>
+          <img *ngFor="let foto of item.imagenes" src="{{'data:image/png;base64,'+ foto}}">
+          <ion-card-header>
+            <ion-card-title>{{item.titulo}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content style="white-space: pre-wrap;">
+            <div class="cardtext">
+              {{item.descripcion}}
+            </div>
 
-            <ion-item-options lines="none" side="end" (ionSwipe)="borraNota(item.id)">
-              <ion-item-option color="danger">
-                <ion-icon slot="icon-only" name="trash"></ion-icon>
-              </ion-item-option>
+            <div class="cardbuttons">
+              <ion-row style="text-align: center; vertical-align: middle;" nowrap>
+                <ion-col>
 
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-slides>
-      </ion-label>
-    </ion-item> -->
+                  <ion-icon class="cardbutton" src="assets/icon/alarm-outline.svg">
+                  </ion-icon>
+
+                </ion-col>
+                <ion-col>
+
+                  <ion-icon class="cardbutton" src="assets/icon/person-add-outline.svg">
+                  </ion-icon>
+
+                </ion-col>
+                <ion-col>
+
+                  <ion-icon class="cardbutton" src="assets/icon/color-palette-outline.svg">
+                  </ion-icon>
+
+                </ion-col>
+                <ion-col>
+
+                  <ion-icon class="cardbutton" (click)="addImageToNota(item, $event)"
+                    src="assets/icon/image-outline.svg"></ion-icon>
+
+                </ion-col>
+                <ion-col>
+
+                  <ion-icon class="cardbutton" (click)="openPopover(item, $event)"
+                    src="assets/icon/ellipsis-vertical.svg"></ion-icon>
+
+                </ion-col>
+              </ion-row>
+
+            </div>
+
+
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+
+  </ng-template>
+
   <ng-template #nocontent>
 
     <ion-grid style="height: 100%">
@@ -98,6 +188,13 @@
     </ion-grid>
 
   </ng-template>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">

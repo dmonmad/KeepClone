@@ -5,8 +5,8 @@ import { nota } from 'src/modelo/nota';
 import { ModalPage } from '../utils/modal/modal.page';
 import { NotasService } from './notas.service';
 import { OverlayEventDetail } from '@ionic/core';
-import { myEnterAnimation } from '../animations/enter';
-import { myLeaveAnimation } from '../animations/leave';
+import { slideInAnimation } from '../animations/enter';
+import { slideOutAnimation } from '../animations/leave';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +39,9 @@ export class UiService {
     let notadata;
     const modal = await this.modal.create({
       component: ModalPage,
+      enterAnimation: slideInAnimation,
+      leaveAnimation: slideOutAnimation,
+      
       componentProps: {
         notamodal : dato
       }

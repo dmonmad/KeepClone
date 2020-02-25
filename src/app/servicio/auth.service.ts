@@ -142,4 +142,10 @@ export class AuthService {
     this.isLogged = false;
   }
 
+  getId() : string {
+    if(this.logintype != LoginType.NONE){
+      return this.isLogged.email;
+    }
+  }
+
 }

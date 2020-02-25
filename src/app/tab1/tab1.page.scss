@@ -7,61 +7,127 @@
   user-select: none;
 }
 
+/////////////*COMIENZO ION-CARD*/////////////
+
 ion-card {
-  height: auto !important;
-  max-width: 238px !important;
-  border: 1px solid #ccc!important;
-  --webkit-box-shadow: none !important;
+  border-radius: 8px !important;
+  color: #202124 !important;
+  border: 1px solid #e0e0e0 !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
   box-shadow: none !important;
+
+  @media (max-width: 599px) and (min-width: 0px) {
+    width: 98% !important;
+  }
+
+  @media (min-width: 600px) {
+    height: auto !important;
+    max-width: 238px !important;
+  }
+}
+
+ion-card:hover {
+  @media (min-width: 600px) {
+    -webkit-box-shadow: 0px 1px 1.5px 0.5px rgb(15, 15, 15, 0.2) !important;
+    -moz-box-shadow: 0px 1px 1.5px 0.5px rgbzz(15, 15, 15, 0.2) !important;
+    box-shadow: 0px 1px 1.5px 0.5px rgba(15, 15, 15, 0.2) !important;
+  }
+}
+
+.unselectable:hover {
+  @media (min-width: 600px) {
+    .cardbuttons {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.25s ease-in-out;
+      -moz-transition: opacity 0.25s ease-in-out;
+      -webkit-transition: opacity 0.25s ease-in-out;
+    }
+  }
 }
 
 ion-card-title {
-    line-height: 1.5rem !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.5px !important;
-    font-family: Roboto Regular;
+  line-height: 1.5rem !important;
+  font-size: 1.1em !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.00625em !important;
+  font-family: Roboto Regular;
+}
+
+ion-card-header {
+  padding-bottom: 4px !important;
+}
+
+.cardbuttons {
+  opacity: 0;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+  visibility: hidden;
 }
 
 ion-card-content {
-    font-size : 14px !important;
-      font-weight: 400 !important;
-      letter-spacing: .00725em !important;
-      line-height: 1.25rem !important;
-      color: black;
-    font-family: Roboto Regular;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.00725em !important;
+  line-height: 1.25rem !important;
+  font-family: Roboto Regular;
 }
 
-.masonry {
-  -moz-column-width: auto;
-  -webkit-column-width: auto;
-  -moz-column-gap: 1em;
-  -webkit-column-gap: 1em;
+///////////////////*FIN ION-CARD*/////////////////////////////////
 
-  @media (max-width: 779px) and (min-width: 0px) {
+//
+//
+
+////////////////////* BOTONES INDIVIDUALES ION-CARD*////////////////////
+ion-icon.cardbutton {
+  stroke: rgba($color: #575757, $alpha: 1);
+  fill: rgba($color: #222222, $alpha: 0);
+  margin-top: 10px;
+  margin-bottom: -10px;
+  cursor: pointer;
+}
+
+ion-icon.cardbutton:hover {
+  stroke: rgba($color: #14141481, $alpha: 1);
+  fill: rgba($color: #ececec, $alpha: 1);
+}
+
+////////////////////* FIN BOTONES INDIVIDUALES ION-CARD*////////////////////
+
+///////////////////* MASONRY *//////////////////////////////////////////////
+
+.masonry {
+
+  @media (max-width: 599px) {
     column-count: 2;
   }
 
-  @media (max-width: 1039px) and (min-width: 780px) {
+  @media (max-width: 834px) and (min-width: 600px) {
+    column-count: 2;
+  }
+
+  @media (max-width: 1349px) and (min-width: 835px) {
     column-count: 3;
   }
 
-  @media (max-width: 1299px) and (min-width: 1040px) {
+  @media (max-width: 1599px) and (min-width: 1350px) {
     column-count: 4;
   }
 
-  @media (max-width: 1699px) and (min-width: 1300px) {
+  @media (max-width: 1800) and (min-width: 1600px) {
     column-count: 5;
   }
 
-  @media (min-width: 1700px) {
+  @media (min-width: 1600px) {
     column-count: 6;
   }
 }
 
 .masonry .item {
   display: inline-block;
-  margin: auto;
+  margin: -10px;
   width: 100%;
 }
 
@@ -78,28 +144,30 @@ ion-card-content {
   margin-inline-end: auto !important;
 }
 
+//////////////////////////////////////* FIN MASONRY *//////////////////////////////////////
+
 ion-content .resize {
-  @media (max-width: 519px) and (min-width: 0px) {
-    width: 98%;
+  @media (max-width: 599px) {
+    width: 100%;
   }
 
-  @media (max-width: 779px) and (min-width: 520px) {
+  @media (max-width: 834px) and (min-width: 600px) {
     width: 504px;
   }
 
-  @media (max-width: 1039px) and (min-width: 780px) {
+  @media (max-width: 1349px) and (min-width: 835px) {
     width: 752px;
   }
 
-  @media (max-width: 1299px) and (min-width: 1040px) {
+  @media (max-width: 1599px) and (min-width: 1350px) {
     width: 1000px;
   }
 
-  @media (min-width: 1300px) {
-    width: 80%;
+  @media (max-width: 1800) and (min-width: 1600px) {
+    width: 1248px;
   }
-}
 
-img {
-  float: left;
+  @media (min-width: 1600px) {
+    width: 1500px;
+  }
 }

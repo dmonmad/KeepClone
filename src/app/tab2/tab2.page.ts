@@ -2,12 +2,9 @@ import { Component } from '@angular/core';
 import { NotasService } from '../servicio/notas.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UiService } from '../servicio/ui.service';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { nota } from 'src/modelo/nota';
 import { Router } from '@angular/router';
-import { IonBackButton } from '@ionic/angular';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { BarcodeScanResult, BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 @Component({
@@ -37,11 +34,15 @@ export class Tab2Page {
   }
 
   async addNote() {
-    let data: nota;
-    data = {
+    let data: nota = {
       titulo: this.notaForm.get('title').value,
-      descripcion: this.notaForm.get('description').value
+      descripcion: this.notaForm.get('description').value,
+      color: '#b5e0ff',
+      imagenes : [],
+      usuarios: []
+
     }
+    console.log(data);
     await this.ui.showLoading("Cargando...");
     this.notasService.agregaNota(data)
       .then((ok) => {

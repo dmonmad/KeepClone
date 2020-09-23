@@ -27,7 +27,12 @@ export class PopoverPage implements OnInit {
     console.log(this.notapop);
     if (this.notapop) {
       console.log("entra 1");
-      this.notaService.borraNota(this.notapop.id);
+      this.notaService.borraNota(this.notapop.id).then( res => {
+
+      })
+      .catch( err => {
+        console.log(err);
+      });
       this.goBack = 1;
       this.closePopover();
     }
@@ -41,10 +46,16 @@ export class PopoverPage implements OnInit {
         descripcion: this.notapop.descripcion,
         color: '#b5e0ff',
         imagenes: this.notapop.imagenes,
-        usuarios: []
+        usuarios: this.notapop.usuarios
 
       }
-      this.notaService.agregaNota(newnota);
+      this.notaService.agregaNota(newnota).then( res => {
+
+      })
+      .catch( err => {
+        console.log(err);
+      });
+      this.goBack = 1;
       this.closePopover();
     }
   }

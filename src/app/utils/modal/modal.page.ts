@@ -142,7 +142,7 @@ export class ModalPage implements OnInit {
     });
 
     popover.onDidDismiss().then(res => {
-      if (res.data.goBack == 1) {
+      if (res.data == 1) {
         this.closeModal();
       }
     })

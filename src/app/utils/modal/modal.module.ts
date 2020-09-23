@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { ModalPageRoutingModule } from './modal-routing.module';
 
-import { ModalPage } from './modal.page';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @NgModule({
@@ -20,6 +19,6 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     NgxQRCodeModule
 
   ],
-  declarations: [ModalPage]
+  declarations: []
 })
 export class ModalPageModule {}

@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { PopoverPageRoutingModule } from './popover-routing.module';
 
-import { PopoverPage } from './popover.page';
 
 @NgModule({
   imports: [
@@ -15,6 +14,6 @@ import { PopoverPage } from './popover.page';
     IonicModule,
     PopoverPageRoutingModule
   ],
-  declarations: [PopoverPage]
+  declarations: []
 })
 export class PopoverPageModule {}

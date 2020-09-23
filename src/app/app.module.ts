@@ -29,7 +29,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ModalPage, PopoverPage],
   entryComponents: [ModalPage, PopoverPage],
   imports: [
     BrowserModule,
